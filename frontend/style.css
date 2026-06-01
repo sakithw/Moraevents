@@ -1,0 +1,45 @@
+.hero-bg {
+    /* Updated with your chosen UoM Fashion Show image and a slightly stronger overlay for better text contrast */
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('https://uom.lk/sites/default/files/styles/juicebox_large/public/textile/gallery/fashion_show/2016/unnamed%20%287%29.jpg?itok=tbWUAirk');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Increased height and padding to make the hero section stand out more */
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* This part fixes the giant logo issue */
+.uni-logo {
+    height: 50px !important;    
+    width: auto !important;     
+    display: block;
+}
+
+/* This part centers the "MoraEvents" text next to the logo */
+.navbar-brand {
+    display: flex !important;
+    align-items: center !important;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 1.4rem; 
+}
+
+/* Ensures the menu still works on mobile */
+@media (max-width: 768px) {
+    .uni-logo {
+        height: 40px !important; 
+    }
+}

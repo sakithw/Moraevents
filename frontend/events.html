@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Events | UniEvents</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+        <<a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
+    <img src="https://upload.wikimedia.org/wikipedia/en/6/60/University_of_Moratuwa_logo.png" 
+         alt="UoM Logo" 
+         class="uni-logo me-2">
+    <span>MoraEvents</span>
+</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto" id="navbar-links">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" href="events.html">Browse Events</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-primary text-white ms-lg-3 px-3" href="auth.html">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-3 mb-4">
+                <div class="card shadow-sm p-3">
+                    <h5 class="fw-bold mb-3">Filter By</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" id="categoryFilter" onchange="filterEvents()">
+                            <option value="All">All Categories</option>
+                            <option value="Tech">Technology</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Cultural">Cultural</option>
+                            <option value="Academic">Academic</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" id="searchInput" class="form-control"
+                               placeholder="Search events..." oninput="filterEvents()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="row" id="event-grid">
+                    <div class="text-center py-5 w-100">
+                        <div class="spinner-border text-primary" role="status"></div>
+                        <p class="mt-3 text-muted">Loading events...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-4 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; UniEvents Team 2026</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

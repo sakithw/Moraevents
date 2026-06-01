@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | UniEvents</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+        <<a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
+    <img src="https://upload.wikimedia.org/wikipedia/en/6/60/University_of_Moratuwa_logo.png" 
+         alt="UoM Logo" 
+         class="uni-logo me-2">
+    <span>MoraEvents</span>
+</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto" id="navbar-links">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="events.html">Browse Events</a></li>
+                <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-primary text-white ms-lg-3 px-3" href="auth.html">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="fw-bold mb-4">Get in Touch</h2>
+                <div class="card shadow-sm p-4 border-0">
+                    <!-- Success alert (hidden by default) -->
+                    <div id="contact-success" class="alert alert-success d-none"></div>
+
+                    <form id="contactForm" onsubmit="handleContact(event)">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" id="contactName" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" id="contactEmail" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Message</label>
+                            <textarea id="contactMessage" class="form-control" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" id="contact-btn" class="btn btn-primary w-100">Send Message</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6 mt-4 mt-md-0">
+                <h2 class="fw-bold mb-4">Our Office</h2>
+                <div class="card border-0 shadow-sm p-3">
+                    <p><strong>Address:</strong> University Campus, Road 01, Colombo, Sri Lanka</p>
+                    <p><strong>Email:</strong> support@unievents.lk</p>
+                    <div class="ratio ratio-16x9 rounded overflow-hidden mt-3">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126743.58290458903!2d79.786164!3d6.921443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae253d10f7a7003%3A0x320b2e4d32d3838d!2sColombo!5e0!3m2!1sen!2slk!4v1648890000000!5m2!1sen!2slk"
+                                style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-4 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; UniEvents Team 2026</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        async function handleContact(event) {
+            event.preventDefault();
+
+            const btn = document.getElementById('contact-btn');
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+
+            const name    = document.getElementById('contactName').value.trim();
+            const email   = document.getElementById('contactEmail').value.trim();
+            const message = document.getElementById('contactMessage').value.trim();
+
+            try {
+                const res = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, message }),
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    const successEl = document.getElementById('contact-success');
+                    successEl.textContent = data.message;
+                    successEl.classList.remove('d-none');
+                    document.getElementById('contactForm').reset();
+                    setTimeout(() => successEl.classList.add('d-none'), 5000);
+                } else {
+                    alert(data.message);
+                }
+            } catch (err) {
+                alert('Connection error. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Send Message';
+            }
+        }
+    </script>
+</body>
+</html>

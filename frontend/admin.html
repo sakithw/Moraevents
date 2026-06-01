@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | UniEvents</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+ <<a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
+    <img src="https://upload.wikimedia.org/wikipedia/en/6/60/University_of_Moratuwa_logo.png" 
+         alt="UoM Logo" 
+         class="uni-logo me-2">
+    <span>MoraEvents</span>
+</a>
+ 
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto" id="navbar-links">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="events.html">Browse Events</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="card shadow border-0 p-4 mb-5">
+            <h2 class="fw-bold mb-4 text-center text-primary">Create New Event</h2>
+            <form id="addEventForm" onsubmit="handleAddEvent(event)">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Event Title</label>
+                        <input type="text" id="eventTitle" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Category</label>
+                        <select id="eventCategory" class="form-select" required>
+                            <option value="Tech">Tech</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Cultural">Cultural</option>
+                            <option value="Academic">Academic</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Date</label>
+                        <input type="text" id="eventDate" class="form-control" placeholder="e.g. Nov 15" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Time</label>
+                        <input type="text" id="eventTime" class="form-control" placeholder="e.g. 10:00 AM" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Venue</label>
+                        <input type="text" id="eventVenue" class="form-control" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Image URL</label>
+                    <input type="url" id="eventImg" class="form-control">
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Description</label>
+                    <textarea id="eventDesc" class="form-control" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 fw-bold">Publish Event</button>
+            </form>
+        </div>
+
+        <div class="card shadow border-0 p-4">
+            <h3 class="fw-bold mb-4">Manage Events</h3>
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>Venue</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-event-list"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Edit Event Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editEventForm">
+                        <input type="hidden" id="editEventId">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Title</label>
+                                <input type="text" id="editTitle" class="form-control">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Category</label>
+                                <select id="editCategory" class="form-select">
+                                    <option value="Tech">Tech</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Cultural">Cultural</option>
+                                    <option value="Academic">Academic</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold">Date</label>
+                                <input type="text" id="editDate" class="form-control">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold">Time</label>
+                                <input type="text" id="editTime" class="form-control">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold">Venue</label>
+                                <input type="text" id="editVenue" class="form-control">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Image URL</label>
+                            <input type="url" id="editImg" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Description</label>
+                            <textarea id="editDesc" class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="button" onclick="saveEdit()" class="btn btn-success w-100 fw-bold">Update Event</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

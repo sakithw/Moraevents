@@ -32,6 +32,17 @@ const eventSchema = new mongoose.Schema({
         type: String,
         default: '09:00 AM',
     },
+    capacity: {
+        type: Number,
+        required: [true, 'Event capacity is required'],
+        default: 10,
+    },
+    waitlist: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+        },
+    ],
     registeredUsers: [
         {
             type: mongoose.Schema.Types.ObjectId,

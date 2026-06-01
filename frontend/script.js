@@ -30,13 +30,13 @@ function renderEvents(data, targetId) {
     data.forEach(event => {
         grid.innerHTML += `
             <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 shadow-sm border-0">
-                    <img src="${event.img}" class="card-img-top" style="height:180px; object-fit:cover;">
-                    <div class="card-body">
-                        <span class="badge bg-primary mb-2">${event.category}</span>
-                        <h5 class="card-title h6 fw-bold">${event.title}</h5>
-                        <p class="card-text text-muted small mb-3">${event.date} | ${event.venue}</p>
-                        <a href="event-view.html?id=${event._id}" class="btn btn-outline-primary btn-sm w-100">View Full Details</a>
+                <div class="glass-card h-100">
+                    <img src="${event.img}" class="card-img-top border-bottom border-secondary" style="height:180px; object-fit:cover;">
+                    <div class="card-body p-4">
+                        <span class="badge mb-2" style="background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));">${event.category}</span>
+                        <h5 class="card-title h6 fw-bold mb-3">${event.title}</h5>
+                        <p class="card-text text-muted small mb-4"><i class="me-2">📅</i>${event.date} <br> <i class="me-2">📍</i>${event.venue}</p>
+                        <a href="event-view.html?id=${event._id}" class="btn btn-outline-primary btn-sm w-100 fw-bold">View Full Details</a>
                     </div>
                 </div>
             </div>

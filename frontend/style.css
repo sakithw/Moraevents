@@ -1,45 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* LIGHT THEME (DEFAULT) */
+    --bg-main: #f8f9fa;
+    --text-primary: #212529;
+    --text-muted: #6c757d;
+    --glass-bg: #ffffff;
+    --glass-border: rgba(0, 0, 0, 0.125);
+    
+    --nav-bg: #212529; /* Keep nav dark as in old style */
+    --nav-text: #ffffff;
+    
+    --accent-blue: #0d6efd;
+    --accent-purple: #0d6efd;
+    --hero-bg-color: #f8f9fa;
+    
+    --card-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+    --card-shadow-hover: 0 .5rem 1rem rgba(0,0,0,.15);
+}
+
+[data-theme="dark"] {
+    /* DARK THEME (NEW GLASSMORPHISM) */
+    --bg-main: #0B0F19;
+    --text-primary: #FFFFFF;
+    --text-muted: #A0ABBA;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    
+    --nav-bg: rgba(11, 15, 25, 0.75);
+    --nav-text: #ffffff;
+    
+    --accent-blue: #00D2FF;
+    --accent-purple: #9D4EDD;
+    
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --card-shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 210, 255, 0.2);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Ensure muted text is visible in both modes */
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* Glassmorphism Utilities (Adaptive) */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+}
+
+.glass-nav {
+    background: var(--nav-bg) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: background-color 0.3s ease;
+}
+
+/* Gradient Text (Only gradient in dark mode, solid blue in light mode) */
+.gradient-text {
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    border: none;
+    color: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4);
+    color: white;
+}
+
+.btn-outline-primary {
+    border: 1px solid var(--accent-blue);
+    color: var(--accent-blue);
+    transition: all 0.3s ease;
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background: var(--accent-blue);
+    color: var(--bg-main);
+    transform: translateY(-2px);
+}
+
+/* Nav Links Animation */
+.navbar-nav .nav-link {
+    position: relative;
+    color: var(--text-muted) !important;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover, .navbar-nav .nav-link.active {
+    color: var(--nav-text) !important;
+}
+
+/* The hover line effect */
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background: var(--accent-blue);
+    transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after, .navbar-nav .nav-link.active::after {
+    width: 100%;
+}
+
+.navbar-nav .btn-primary::after {
+    display: none;
+}
+.navbar-nav .btn-primary {
+    color: white !important;
+}
+
+/* Form Inputs styling */
+.form-control, .form-select {
+    background-color: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+}
+.form-control:focus, .form-select:focus {
+    background-color: var(--glass-bg);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 0.25rem rgba(0, 210, 255, 0.25);
+    color: var(--text-primary);
+}
+
+/* Fix placeholder colors in dark mode */
+[data-theme="dark"] .form-control::placeholder {
+    color: var(--text-muted);
+}
+
+/* Hero Section Updates */
 .hero-bg {
-    /* Updated with your chosen UoM Fashion Show image and a slightly stronger overlay for better text contrast */
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--glass-border);
+    background-size: cover;
+    background-position: center;
+}
+
+/* Dark mode hero uses radial gradient, light mode uses the UoM image */
+:root .hero-bg {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
                 url('https://uom.lk/sites/default/files/styles/juicebox_large/public/textile/gallery/fashion_show/2016/unnamed%20%287%29.jpg?itok=tbWUAirk');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    
-    /* Increased height and padding to make the hero section stand out more */
-    min-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+}
+:root .hero-bg .gradient-text {
+    /* In light mode hero, the text should be white since the background is dark */
+    background: none;
+    -webkit-text-fill-color: white;
+    color: white;
+}
+:root .hero-bg .text-white-50 {
+    color: rgba(255,255,255,0.7) !important;
 }
 
-.card {
-    transition: transform 0.2s;
+[data-theme="dark"] .hero-bg {
+    background: radial-gradient(circle at top right, rgba(157, 78, 221, 0.2), transparent 40%),
+                radial-gradient(circle at bottom left, rgba(0, 210, 255, 0.15), transparent 40%);
 }
 
-.card:hover {
-    transform: translateY(-5px);
+/* Glass Event Cards */
+.glass-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    overflow: hidden;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
 }
 
-/* This part fixes the giant logo issue */
+.glass-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--accent-blue);
+}
+
 .uni-logo {
-    height: 50px !important;    
+    height: 45px !important;    
     width: auto !important;     
     display: block;
 }
 
-/* This part centers the "MoraEvents" text next to the logo */
 .navbar-brand {
     display: flex !important;
     align-items: center !important;
     padding-top: 5px;
     padding-bottom: 5px;
     font-size: 1.4rem; 
+    color: white !important;
 }
 
-/* Ensures the menu still works on mobile */
 @media (max-width: 768px) {
     .uni-logo {
-        height: 40px !important; 
+        height: 35px !important; 
     }
+}
+
+/* Theme Toggle Button */
+#theme-toggle {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+}
+#theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* Ensure text inside glass cards adapts correctly */
+:root .glass-card .text-white, :root .glass-panel .text-white {
+    color: var(--text-primary) !important;
 }

@@ -14,6 +14,7 @@ const sampleEvents = [
         img: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400',
         description: 'Join us for the annual Tech-Fest Hackathon. This event brings together students from all faculties to innovate, compete, and network. 24-hour coding challenge with amazing prizes.',
         time: '09:00 AM',
+        capacity: 5,
     },
     {
         title: 'Annual Cricket Match',
@@ -23,6 +24,7 @@ const sampleEvents = [
         img: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=400',
         description: 'The annual inter-faculty cricket championship is back! Cheer for your faculty and enjoy a full day of exciting cricket action.',
         time: '08:00 AM',
+        capacity: 5,
     },
     {
         title: 'Web Dev Workshop',
@@ -32,6 +34,7 @@ const sampleEvents = [
         img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400',
         description: 'A hands-on workshop covering modern web development with HTML, CSS, JavaScript, and React. Laptops required. All skill levels welcome.',
         time: '10:00 AM',
+        capacity: 5,
     },
     {
         title: 'Music Night 2026',
@@ -41,6 +44,7 @@ const sampleEvents = [
         img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400',
         description: 'Experience a magical evening of live music performances by the university\'s most talented students. Bands, solo acts, and a great atmosphere.',
         time: '06:00 PM',
+        capacity: 5,
     },
     {
         title: 'Badminton Tournament',
@@ -50,6 +54,7 @@ const sampleEvents = [
         img: 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=400',
         description: 'Open singles and doubles badminton tournament. Register as an individual or a pair. Prizes for top 3 in each category.',
         time: '09:00 AM',
+        capacity: 5,
     },
 ];
 

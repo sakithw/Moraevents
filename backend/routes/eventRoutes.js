@@ -66,6 +66,16 @@ router.post('/:id/register', protect, async (req, res) => {
             return res.status(400).json({ success: false, message: 'You are already registered for this event!' });
         }
 
+        if (event.waitlist.includes(req.user._id)) {
+            return res.status(400).json({ success: false, message: 'You are already on the waitlist.' });
+        }
+
+        if (event.registeredUsers.length >= event.capacity) {
+            event.waitlist.push(req.user._id);
+            await event.save();
+            return res.json({ success: true, message: 'Event is full. You have been added to the waitlist.' });
+        }
+
         // Add user to the event's registeredUsers array
         event.registeredUsers.push(req.user._id);
         await event.save();
@@ -81,5 +91,44 @@ router.post('/:id/register', protect, async (req, res) => {
 });
 // ------------------------------------
 
+
+// ------------------------------------
+
+// --- ADD THIS CANCELLATION ROUTE ---
+router.post('/:id/cancel', protect, async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id);
+        if (!event) return res.status(404).json({ success: false, message: 'Event not found' });
+        const userId = req.user._id.toString();
+        
+        if (event.registeredUsers.some(id => id.toString() === userId)) {
+            // User is registered. Remove them.
+            event.registeredUsers = event.registeredUsers.filter(id => id.toString() !== userId);
+            req.user.registeredEvents = req.user.registeredEvents.filter(id => id.toString() !== event._id.toString());
+            await req.user.save();
+
+            // Auto-Promote from waitlist
+            if (event.waitlist.length > 0) {
+                const promotedUserId = event.waitlist.shift();
+                event.registeredUsers.push(promotedUserId);
+                
+                // Add to promoted user's registeredEvents
+                const User = require('../models/User');
+                await User.findByIdAndUpdate(promotedUserId, { $push: { registeredEvents: event._id } });
+            }
+        } else if (event.waitlist.some(id => id.toString() === userId)) {
+            // User is waitlisted. Remove them.
+            event.waitlist = event.waitlist.filter(id => id.toString() !== userId);
+        } else {
+            return res.status(400).json({ success: false, message: 'Not registered or waitlisted.' });
+        }
+
+        await event.save();
+        res.json({ success: true, message: 'Successfully canceled registration' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+// ------------------------------------
 
 module.exports = router;

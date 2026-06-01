@@ -46,3 +46,5 @@ app.listen(PORT, () => {
     console.log(`📡 API available at http://localhost:${PORT}/api`);
     console.log(`📂 Frontend served at http://localhost:${PORT}\n`);
 });
+
+module.exports = app;
